@@ -1,3 +1,4 @@
+// jshint esversion: 6
 class TreeBuilder {
 
   constructor(root, siblings, opts) {
