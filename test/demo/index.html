@@ -11,12 +11,17 @@
 	}
 	.marriage {
 	    fill: none;
-	    stroke: black;
+		stroke: black;
 	}
 	.ex-marriage {
 	    fill: none;
 		stroke: black;
 		stroke-dasharray: 2,2;
+	}
+	.node {
+		background-color: lightblue;
+		border-style: solid;
+		border-width: 1px;
 	}
 	.man {
 	    background-color: lightblue;
@@ -45,11 +50,14 @@
     <div id="graph"></div>
 
 		<script>
-      treeJson = d3.json("data.json", function(error, treeData) {
+      treeJson = d3.json("data2.json", function(error, treeData) {
       	dTree.init(treeData,
 					{
 						target: "#graph",
 						debug: true,
+						height: 1000,
+						nodeWidth: 50,
+						nodeHeight: 50,
 						styles: {
 							exMarriage: 'ex-marriage'
 						},
