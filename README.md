@@ -3,6 +3,16 @@
 
 [![npm](https://img.shields.io/npm/v/d3-dtree.svg)](https://www.npmjs.com/package/d3-dtree) [![Bower](https://img.shields.io/bower/v/d3-dtree.svg)](https://github.com/ErikGartner/dTree)
 
+## Ancestry Tree from the Upwork task [D3, Angular teammate wanted](https://www.upwork.com/jobs/_~0147853f6a6c3653d0/)
+![Ancestry Tree from the task](https://github.com/osya/dTree/raw/feature/upwork_task/ftree.annotated.png "Ancestry Tree from the task")
+There was an Upwork task to draw ancestor tree with D3. I tried to use specialized D3-based library [dTree](https://github.com/ErikGartner/dTree) for this. The issues were:
+
+- Impossible to add only one parent. I fixed it via hiding another parent.
+- Impossible to add parents for spouse. Existing JSON format does not allow it. There is an [existing issue](https://github.com/ErikGartner/dTree/issues/51)
+- No angular directives. There is a [corresponding issue](https://github.com/ErikGartner/dTree/issues/41)
+
+
+
 ## Treehouse
 There exists a playground/open repository for dTree graphs called [Treehouse](https://treehouse.gartner.io). There anyone can host a dTree graph without having to create a website or interact directly with the library. It uses Github gists to store the data displays it in a nice format. Checkout the **demo** graph for dTree: https://treehouse.gartner.io/ErikGartner/58e58be650453b6d49d7
 
