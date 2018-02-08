@@ -7,11 +7,11 @@
 ![Ancestry Tree from the task](https://github.com/osya/dTree/raw/feature/upwork_task/ftree.annotated.png "Ancestry Tree from the task")
 There was an Upwork task to draw ancestor tree with D3. I tried to use specialized D3-based library [dTree](https://github.com/ErikGartner/dTree) for this. The issues were:
 
-- Impossible to add only one parent. I fixed it via hiding another parent.
+- Impossible to add only one parent. I [fixed it](https://github.com/ErikGartner/dTree/pull/69) via hiding another parent.
+- Impossible to change how ex-spouse is drawn. Ex-spouse drawn on the same height as a current spouse. And connector line from ex-spouse move around current spouse. I changed it - moved ex-spouses node up, change ex-spouse line style to dashed, and made line from ex-spouse straight
 - Impossible to add parents for spouse. Existing JSON format does not allow it. There is an [existing issue](https://github.com/ErikGartner/dTree/issues/51)
 - No angular directives. There is a [corresponding issue](https://github.com/ErikGartner/dTree/issues/41)
-
-
+- No tests. There are only Mocha mocks for tests. There is a corresponding [issue](https://github.com/ErikGartner/dTree/issues/9)
 
 ## Treehouse
 There exists a playground/open repository for dTree graphs called [Treehouse](https://treehouse.gartner.io). There anyone can host a dTree graph without having to create a website or interact directly with the library. It uses Github gists to store the data displays it in a nice format. Checkout the **demo** graph for dTree: https://treehouse.gartner.io/ErikGartner/58e58be650453b6d49d7
