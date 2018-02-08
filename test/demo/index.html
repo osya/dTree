@@ -13,6 +13,11 @@
 	    fill: none;
 	    stroke: black;
 	}
+	.ex-marriage {
+	    fill: none;
+		stroke: black;
+		stroke-dasharray: 2,2;
+	}
 	.man {
 	    background-color: lightblue;
 			border-style: solid;
@@ -45,8 +50,9 @@
 					{
 						target: "#graph",
 						debug: true,
-						height: 800,
-						width: 1200,
+						styles: {
+							exMarriage: 'ex-marriage'
+						},
 						callbacks: {
 							nodeClick: function(name, extra) {
 								console.log(name);

@@ -90,7 +90,10 @@ class TreeBuilder {
       .data(this.siblings)
       .enter()
       .append('path')
-      .attr('class', opts.styles.marriage)
+      .attr('class', function(d) {
+        // Support separate line-style for ex-spouse
+        return d.number > 0 ? opts.styles.exMarriage : opts.styles.marriage;
+      })
       .attr('d', _.bind(this._siblingLine, this));
 
     // Create the node rectangles.
@@ -102,7 +105,12 @@ class TreeBuilder {
         return d.x - d.cWidth / 2 + 'px';
       })
       .attr('y', function(d) {
-        return d.y - d.cHeight / 2 + 'px';
+        let y = d.y - d.cHeight / 2;
+        // Move up ex-spouses' node
+        if (d.number > 0) {
+          y -= 10;
+        }
+        return y + 'px';
       })
       .attr('width', function(d) {
         return d.cWidth + 'px';
@@ -189,6 +197,12 @@ class TreeBuilder {
       let end = allNodes.filter(function(v) {
         return d.target.id == v.data.id;
       });
+
+      // Move up line for ex-spouse
+      if (d.number > 0) {
+        d.target.y -= 3;
+        end[0].y -= 3;
+      }
       d.source.x = start[0].x;
       d.source.y = start[0].y;
       d.target.x = end[0].x;
@@ -220,33 +234,45 @@ class TreeBuilder {
     let nodeWidth = this.nodeSize[0];
     let nodeHeight = this.nodeSize[1];
 
+    // I commented in order to use different ex-spouse drawing
     // Not first marriage
-    if (d.number > 0) {
-      ny -= nodeHeight * 8 / 10;
-    }
+    // if (d.number > 0) {
+    //   ny -= nodeHeight * 8 / 10;
+    // }
 
-    let linedata = 
-      d.source.x === d.target.x && d.source.y === d.target.y ? 
-        [] : // If spouse is hidden
-        [{ // regular case
-      x: d.source.x,
-      y: d.source.y
-    }, {
-      x: d.source.x + nodeWidth * 6 / 10,
-      y: d.source.y
-    }, {
-      x: d.source.x + nodeWidth * 6 / 10,
-      y: ny
-    }, {
-      x: d.target.marriageNode.x,
-      y: ny
-    }, {
-      x: d.target.marriageNode.x,
-      y: d.target.y
-    }, {
-      x: d.target.x,
-      y: d.target.y
-    }];
+    let linedata = d.source.x === d.target.x && d.source.y === d.target.y ?
+      // If spouse is hidden
+      [] :
+      d.number > 0 ?  // if it is an ex-spouse
+        [{
+          x: d.source.x,
+          y: d.source.y
+        }, {
+          x: d.source.x,
+          y: d.target.y
+        }, {
+          x: d.target.x,
+          y: d.target.y
+        }] :  // regular case
+        [{
+          x: d.source.x,
+          y: d.source.y
+        }, {
+          x: d.source.x + nodeWidth * 6 / 10,
+          y: d.source.y
+        }, {
+          x: d.source.x + nodeWidth * 6 / 10,
+          y: ny
+        }, {
+          x: d.target.marriageNode.x,
+          y: ny
+        }, {
+          x: d.target.marriageNode.x,
+          y: d.target.y
+        }, {
+          x: d.target.x,
+          y: d.target.y
+        }];
 
     let fun = d3.line().curve(d3.curveStepAfter)
       .x(function(d) {
