@@ -13,6 +13,8 @@ There was an Upwork task to draw ancestor tree with D3. I tried to use specializ
 - No angular directives. There is a [corresponding issue](https://github.com/ErikGartner/dTree/issues/41)
 - No tests. There are only Mocha mocks for tests. There is a corresponding [issue](https://github.com/ErikGartner/dTree/issues/9)
 
+![Result Ancestry tree](https://github.com/osya/dTree/raw/feature/upwork_task/dTree_result.png "Result Ancestry Tree")
+
 ## Treehouse
 There exists a playground/open repository for dTree graphs called [Treehouse](https://treehouse.gartner.io). There anyone can host a dTree graph without having to create a website or interact directly with the library. It uses Github gists to store the data displays it in a nice format. Checkout the **demo** graph for dTree: https://treehouse.gartner.io/ErikGartner/58e58be650453b6d49d7
 
