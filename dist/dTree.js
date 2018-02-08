@@ -7,6 +7,8 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 })(this, function () {
   'use strict';
 
+  // jshint esversion: 6
+
   var TreeBuilder = (function () {
     function TreeBuilder(root, siblings, opts) {
       _classCallCheck(this, TreeBuilder);
@@ -70,6 +72,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var links = treenodes.links();
 
         // Create the link lines.
+        this._linkSiblings(); //  I moved this line before _elbow() for Single parent support
         this.svg.selectAll('.link').data(links).enter()
         // filter links with no parents to prevent empty nodes
         .filter(function (l) {
@@ -78,10 +81,11 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 
         var nodes = this.svg.selectAll('.node').data(treenodes.descendants()).enter();
 
-        this._linkSiblings();
-
         // Draw siblings (marriage)
-        this.svg.selectAll('.sibling').data(this.siblings).enter().append('path').attr('class', opts.styles.marriage).attr('d', _.bind(this._siblingLine, this));
+        this.svg.selectAll('.sibling').data(this.siblings).enter().append('path').attr('class', function (d) {
+          // Support separate line-style for ex-spouse
+          return d.number > 0 ? opts.styles.exMarriage : opts.styles.marriage;
+        }).attr('d', _.bind(this._siblingLine, this));
 
         // Create the node rectangles.
         nodes.append('foreignObject').filter(function (d) {
@@ -89,7 +93,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         }).attr('x', function (d) {
           return d.x - d.cWidth / 2 + 'px';
         }).attr('y', function (d) {
-          return d.y - d.cHeight / 2 + 'px';
+          var y = d.y - d.cHeight / 2;
+          // Move up ex-spouses' node
+          if (d.number > 0) {
+            y -= 10;
+          }
+          return y + 'px';
         }).attr('width', function (d) {
           return d.cWidth + 'px';
         }).attr('height', function (d) {
@@ -162,6 +171,12 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var end = allNodes.filter(function (v) {
             return d.target.id == v.data.id;
           });
+
+          // Move up line for ex-spouse
+          if (d.number > 0) {
+            d.target.y -= 3;
+            end[0].y -= 3;
+          }
           d.source.x = start[0].x;
           d.source.y = start[0].y;
           d.target.x = end[0].x;
@@ -173,6 +188,14 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           });
           d.source.marriageNode = marriageNode;
           d.target.marriageNode = marriageNode;
+
+          if (_.get(end[0].data, 'hidden', false)) {
+            // Hide horizontal line for hidden spouse
+            d.target.x = start[0].x;
+            d.target.y = start[0].y;
+            marriageNode.x = start[0].x;
+            marriageNode.y = start[0].y;
+          }
         });
       }
     }, {
@@ -183,12 +206,26 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
         var nodeWidth = this.nodeSize[0];
         var nodeHeight = this.nodeSize[1];
 
+        // I commented in order to use different ex-spouse drawing
         // Not first marriage
-        if (d.number > 0) {
-          ny -= nodeHeight * 8 / 10;
-        }
+        // if (d.number > 0) {
+        //   ny -= nodeHeight * 8 / 10;
+        // }
 
-        var linedata = [{
+        var linedata = d.source.x === d.target.x && d.source.y === d.target.y ?
+        // If spouse is hidden
+        [] : d.number > 0 ? // if it is an ex-spouse
+        [{
+          x: d.source.x,
+          y: d.source.y
+        }, {
+          x: d.source.x,
+          y: d.target.y
+        }, {
+          x: d.target.x,
+          y: d.target.y
+        }] : // regular case
+        [{
           x: d.source.x,
           y: d.source.y
         }, {
@@ -403,7 +440,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
           var spouse = {
             name: sp.name,
             id: id++,
-            hidden: false,
+            hidden: _.get(marriage.spouse, 'hidden', false),
             noParent: true,
             children: [],
             textClass: sp.textClass ? sp.textClass : opts.styles.text,
