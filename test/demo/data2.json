@@ -1,48 +1,42 @@
 [{
   "name": "Mother's Father",
   "class": "node",
-  "marriages": [{
-    "spouse": {
-      "name": "Mother's Mother",
-      "hidden": true
-    },
-    "children": [{
-      "name": "Mother",
-      "class": "node",
-      "marriages": [{
-        "spouse": {
-          "name": "Father",
-          "class": "node"
-        },
-        "children": [{
-          "name": "Sister",
-          "class": "node"
-        }, {
-          "name": "Brother",
-          "class": "node"
-        }, {
-          "name": "You",
-          "class": "node",
-          "marriages": [{
-            "spouse": {
-              "name": "Partner",
-              "class": "node"
-            },
-            "children": [{
-              "name": "Child",
-              "class": "node"
-            }]
-          }, {
-            "spouse": {
-              "name": "Ex",
-              "class": "node"
-            }
+  "children": [{
+    "name": "Mother",
+    "class": "node",
+    "marriages": [{
+      "spouse": {
+        "name": "Father",
+        "class": "node"
+      },
+      "children": [{
+        "name": "Sister",
+        "class": "node"
+      }, {
+        "name": "Brother",
+        "class": "node"
+      }, {
+        "name": "You",
+        "class": "node",
+        "marriages": [{
+          "spouse": {
+            "name": "Partner",
+            "class": "node"
+          },
+          "children": [{
+            "name": "Child",
+            "class": "node"
           }]
+        }, {
+          "spouse": {
+            "name": "Ex",
+            "class": "node"
+          }
         }]
       }]
-    }, {
-      "name": "Mother's brother",
-      "class": "node"
     }]
+  }, {
+    "name": "Mother's brother",
+    "class": "node"
   }]
 }]
