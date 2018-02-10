@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9f018838-3903-4154-ae2f-3165a59c18e9" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/dist/dTree.js" afterPath="$PROJECT_DIR$/dist/dTree.js" />
-      <change beforePath="$PROJECT_DIR$/dist/dTree.js.map" afterPath="$PROJECT_DIR$/dist/dTree.js.map" />
-      <change beforePath="$PROJECT_DIR$/dist/dTree.min.js" afterPath="$PROJECT_DIR$/dist/dTree.min.js" />
-      <change beforePath="$PROJECT_DIR$/dist/dTree.min.js.map" afterPath="$PROJECT_DIR$/dist/dTree.min.js.map" />
-      <change beforePath="$PROJECT_DIR$/src/builder.js" afterPath="$PROJECT_DIR$/src/builder.js" />
-      <change beforePath="$PROJECT_DIR$/src/dtree.js" afterPath="$PROJECT_DIR$/src/dtree.js" />
-      <change beforePath="$PROJECT_DIR$/test/demo/data.json" afterPath="$PROJECT_DIR$/test/demo/data.json" />
       <change beforePath="$PROJECT_DIR$/test/demo/dtree.js" afterPath="$PROJECT_DIR$/test/demo/dtree.js" />
-      <change beforePath="$PROJECT_DIR$/test/demo/index.html" afterPath="$PROJECT_DIR$/test/demo/index.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
